@@ -8,5 +8,6 @@ namespace Extranet_Financeiro.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
         public DbSet<Relatorio> Relatorios { get; set; }
+        public DbSet<AnoSemestre> AnoSemestres { get; set; }
     }
 }

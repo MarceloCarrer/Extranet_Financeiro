@@ -10,6 +10,7 @@ namespace Extranet_Financeiro.API.Models
 
         public int Ano { get; set; }
 
+        //[Column(TypeName = "decimal(18,4)")]
         public decimal ValorPago { get; set; }
 
         public decimal PorcSenacrs { get; set; }
@@ -24,6 +25,6 @@ namespace Extranet_Financeiro.API.Models
 
         public DateTime DataRegistro { get; set; }
 
-        public DateTime DataAtualizacao { get; set; }
+        public DateTime? DataAtualizacao { get; set; }
     }
 }

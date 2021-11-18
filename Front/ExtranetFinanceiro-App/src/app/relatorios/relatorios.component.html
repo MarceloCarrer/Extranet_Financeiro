@@ -1,0 +1,14 @@
+<h2>Relatórios</h2>
+
+<div *ngFor="let relatorio of relatorios">
+  <p><b>Mês:</b> {{relatorio.mes}}</p>
+  <p><b>Ano:</b> {{relatorio.ano}}</p>
+  <p><b>Valor Pago:</b> {{relatorio.valorPago}}</p>
+  <p><b>% SenacRS:</b> {{relatorio.porcSenacrs}}</p>
+  <p><b>% Polo:</b> {{relatorio.porcPolo}}</p>
+  <p><b>Devolução:</b> {{relatorio.devolucao}}</p>
+  <p><b>% Devolução SenacRS:</b> {{relatorio.porcDevSenacrs}}</p>
+  <p><b>% Devolução Polo:</b> {{relatorio.porcDevPolo}}</p>
+  <p><b>Data Registro:</b> {{relatorio.dataRegistro}}</p>
+  <p><b>Data Atualização:</b> {{relatorio.dataAtualizacao}}</p>
+</div>
