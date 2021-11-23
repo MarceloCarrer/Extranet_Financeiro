@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Extranet_Financeiro.API.Data;
-using Extranet_Financeiro.API.Models;
+using Extranet_Financeiro.Application.Contract;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Extranet_Financeiro.API.Controllers
 {
@@ -13,24 +10,51 @@ namespace Extranet_Financeiro.API.Controllers
     [Route("api/[controller]")]
     public class RelatoriosController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly IRelatorioService _relatorioService;
 
-        public RelatoriosController(DataContext context)
+        public RelatoriosController(IRelatorioService relatorioService)
         {
-            _context = context;
+            _relatorioService = relatorioService;
         }
 
         [HttpGet]
-        public IEnumerable<Relatorio> Get()
+        public async Task<IActionResult> Get()
         {
-            return _context.Relatorios.OrderByDescending(r => r.Ano)
-                                      .ThenByDescending(r => r.Mes);
+            try
+            {
+                 var relatorios = await _relatorioService.GetAllRelatoriosAsync();
+                 if (relatorios == null)
+                 {
+                     return NotFound("Nenhum relatório encontrado.");
+                 }
+
+                 return Ok(relatorios);
+            }
+            catch (Exception ex)
+            {                
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar recuperar relatórios. Erro: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
-        public Relatorio GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return _context.Relatorios.FirstOrDefault(r => r.RelatorioId == id);
+            try
+            {
+                 var relatorio = await _relatorioService.GetRelatorioByIdAsync(id);
+                 if (relatorio == null)
+                 {
+                     return NotFound("Nenhum relatório por Id encontrado.");
+                 }
+
+                 return Ok(relatorio);
+            }
+            catch (Exception ex)
+            {                
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar recuperar relatórios. Erro: {ex.Message}");
+            }
         }
     }
 }

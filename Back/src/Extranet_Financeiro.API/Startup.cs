@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Extranet_Financeiro.API.Data;
+using Extranet_Financeiro.Application;
+using Extranet_Financeiro.Application.Contract;
+using Extranet_Financeiro.Persistence;
+using Extranet_Financeiro.Persistence.Context;
+using Extranet_Financeiro.Persistence.Contract;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Extranet_Financeiro.API
@@ -31,7 +28,15 @@ namespace Extranet_Financeiro.API
             services.AddDbContext<DataContext>(
                 context => context.UseSqlServer(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(
+                        x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    );
+
+            services.AddScoped<IRelatorioService, RelatorioService>();
+            services.AddScoped<IRelatorioPersistence, RelatorioPersistence>();
+            services.AddScoped<IPoloRelatorioService, PoloRelatorioService>();
+            services.AddScoped<IPoloRelatorioPersistence, PoloRelatorioPersistence>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

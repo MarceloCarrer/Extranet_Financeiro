@@ -1,8 +1,8 @@
-namespace Extranet_Financeiro.API.Models
+namespace Extranet_Financeiro.Domain
 {
     public class AnoSemestre
     {
-        public int AnoSemestreId { get; set; }
+        public int Id { get; set; }
 
         public int Descricao { get; set; }        
     }
