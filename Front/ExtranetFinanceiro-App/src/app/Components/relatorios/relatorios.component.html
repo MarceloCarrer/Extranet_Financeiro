@@ -1,13 +1,11 @@
-<div class="card rounded shadow-sm p-3">
-  <!-- <div class="d-flex">
-    <div class="input-group">
-      <div class="form-group mb-2">
-        <input type="text" class="form-control mr-2" placeholder="Pesquisar..."
-        [(ngModel)]="filtroLista">
-      </div>
-    </div>
-  </div> -->
+<app-titulo
+[titulo]="'Relatórios'"
+[rota]="'relatorios'"
+[iconClass]="'fa fa-chart-bar'"
+[botaoListar]="false">
+</app-titulo>
 
+<div class="card rounded shadow-sm p-3">
   <table class="table table-striped table-hover">
     <thead class="thead-dark">
       <tr>
@@ -23,7 +21,7 @@
       </tr>
     </thead>
     <tbody *ngIf="relatorios && relatorios.length">
-      <tr *ngFor="let relatorio of relatoriosFiltrados" style="cursor: pointer;">
+      <tr *ngFor="let relatorio of relatoriosFiltrados" (click)="getPolos(relatorio.id)" style="cursor: pointer;">
         <td>{{relatorio.mes + '/' + relatorio.ano}}</td>
         <td>{{relatorio.valorPago | currency:'BRL'}}</td>
         <td>{{relatorio.porcSenacrs | currency:'BRL'}}</td>
@@ -31,13 +29,13 @@
         <td class="d-none d-md-table-cell">{{relatorio.devolucao | currency:'BRL'}}</td>
         <td class="d-none d-md-table-cell">{{relatorio.porcDevSenacrs | currency:'BRL'}}</td>
         <td class="d-none d-md-table-cell">{{relatorio.porcDevPolo | currency:'BRL'}}</td>
-        <td class="d-none d-md-table-cell">{{relatorio.dataRegistro}}</td>
-        <td class="d-none d-md-table-cell">{{relatorio.dataAtualizacao}}</td>
+        <td class="d-none d-md-table-cell" mask="d0/M0/0000">{{relatorio.dataRegistro}}</td>
+        <td class="d-none d-md-table-cell" mask="d0/M0/0000">{{relatorio.dataAtualizacao}}</td>
       </tr>
     </tbody>
     <tfoot *ngIf="!relatorios.length">
       <tr>
-        <td colspan="8" class="text-center">
+        <td colspan="9" class="text-center">
           <h4>Nenhum Relatório Encontrado!</h4>
         </td>
       </tr>

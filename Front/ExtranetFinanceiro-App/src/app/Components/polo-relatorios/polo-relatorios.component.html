@@ -1,0 +1,107 @@
+<app-titulo
+[titulo]="'Polos'"
+[rota]="'poloRelatorios'"
+[subtitulo]="'Relatórios'"
+[subRota]="'relatorios'"
+[iconClass]="'fa fa-school'"
+[botaoListar]="true">
+</app-titulo>
+
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="input-group">
+      <div class="form-group mb-2">
+        <input type="text" class="form-control mr-2" placeholder="Pesquisar Polos..."
+        [(ngModel)]="filtroLista">
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th class="d-none d-md-table-cell">Mês/Ano</th>
+        <th class="d-none d-md-table-cell">DR</th>
+        <th>Polo</th>
+        <th class="d-none d-md-table-cell">CNPJ</th>
+        <th>Valor Pago</th>
+        <th>% SenacRS</th>
+        <th>% Polo</th>
+        <th class="d-none d-md-table-cell">Devolução</th>
+        <th class="d-none d-md-table-cell">% Dev. SenacRS</th>
+        <th class="d-none d-md-table-cell">% Dev. Polo</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="poloRelatorios && poloRelatorios.length">
+      <tr *ngFor="let poloRelatorio of polosFiltrados" style="cursor: pointer;" (click)="openModal(template, poloRelatorio.id, poloRelatorio.nome)">
+        <td class="d-none d-md-table-cell">{{poloRelatorio.mes + '/' + poloRelatorio.ano}}</td>
+        <td class="d-none d-md-table-cell">{{poloRelatorio.dr}}</td>
+        <td>{{poloRelatorio.nome}}</td>
+        <td class="d-none d-md-table-cell">{{poloRelatorio.cnpj == null ? 'Não Informado.' : poloRelatorio.cnpj}}</td>
+        <td>{{poloRelatorio.valorPago | currency:'BRL'}}</td>
+        <td>{{poloRelatorio.porcSenacrs | currency:'BRL'}}</td>
+        <td>{{poloRelatorio.porcPolo | currency:'BRL'}}</td>
+        <td class="d-none d-md-table-cell">{{poloRelatorio.devolucao | currency:'BRL'}}</td>
+        <td class="d-none d-md-table-cell">{{poloRelatorio.porcDevSenacrs | currency:'BRL'}}</td>
+        <td class="d-none d-md-table-cell">{{poloRelatorio.porcDevPolo | currency:'BRL'}}</td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!poloRelatorios.length">
+      <tr>
+        <td colspan="10" class="text-center">
+          <h4>Nenhum Polo Encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- Lista de Turmas -->
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left"> {{this.polo}} </h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Turma</th>
+          <th>Valor Pago</th>
+          <th>% SenacRS</th>
+          <th>% Polo</th>
+          <th>Devolução</th>
+          <th class="d-none d-md-table-cell">% Dev. SenacRS</th>
+          <th class="d-none d-md-table-cell">%</th>
+          <th class="d-none d-md-table-cell">% Dev. Polo</th>
+          <th class="d-none d-md-table-cell">%</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="poloTurmas && poloTurmas.length">
+        <tr *ngFor="let poloTurma of poloTurmas" style="cursor: pointer;">
+          <td>{{poloTurma.turma}}</td>
+          <td>{{poloTurma.valorPago | currency:'BRL'}}</td>
+          <td>{{poloTurma.porcSenacrs | currency:'BRL'}}</td>
+          <td>{{poloTurma.porcPolo | currency:'BRL'}}</td>
+          <td>{{poloTurma.devolucao | currency:'BRL'}}</td>
+          <td class="d-none d-md-table-cell">{{poloTurma.porcDevSenacrs | currency:'BRL'}}</td>
+          <td class="d-none d-md-table-cell">{{poloTurma.percenSenacrs*100}}%</td>
+          <td class="d-none d-md-table-cell">{{poloTurma.porcDevSenacrs | currency:'BRL'}}</td>
+          <td class="d-none d-md-table-cell">{{poloTurma.percenPolo*100}}%</td>
+        </tr>
+      </tbody>
+      <tfoot *ngIf="!poloTurmas.length">
+        <tr>
+          <td colspan="9" class="text-center">
+            <h4>Nenhuma Turma Encontrada!</h4>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</ng-template>
+
+

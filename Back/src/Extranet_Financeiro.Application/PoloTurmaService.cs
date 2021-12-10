@@ -8,28 +8,28 @@ using Extranet_Financeiro.Persistence.Contract;
 
 namespace Extranet_Financeiro.Application
 {
-    public class PoloRelatorioService : IPoloRelatorioService
+    public class PoloTurmaService : IPoloTurmaService
     {
-        private readonly IPoloRelatorioPersistence _poloRelatorioPersistence;
+        private readonly IPoloTurmaPersistence _poloTurmaPersistence;
         private readonly IMapper _mapper;
-        
-        public PoloRelatorioService(IPoloRelatorioPersistence poloRelatorioPersistence, IMapper mapper)
+
+        public PoloTurmaService(IPoloTurmaPersistence poloTurmaPersistence, IMapper mapper)
         {
-            _poloRelatorioPersistence = poloRelatorioPersistence;
+            _poloTurmaPersistence = poloTurmaPersistence;
             _mapper = mapper;
         }
 
-        public async Task<PoloRelatorioDto[]> GetAllPolosPorRelatorioAsync(int relatorioId)
+        public async Task<PoloTurmaDto[]> GetAllTurmasPorPoloAsync(int poloRelatorioId)
         {
             try
             {
-                var poloRelatorios = await _poloRelatorioPersistence.GetAllPolosPorRelatorioAsync(relatorioId);
-                if (poloRelatorios == null)
+                var poloTurmas = await _poloTurmaPersistence.GetAllTurmasPorPoloAsync(poloRelatorioId);
+                if (poloTurmas == null)
                 {
                     return null;
                 }
 
-                var result = _mapper.Map<PoloRelatorioDto[]>(poloRelatorios);
+                var result = _mapper.Map<PoloTurmaDto[]>(poloTurmas);
 
                 return result;
             }
@@ -39,17 +39,17 @@ namespace Extranet_Financeiro.Application
             }
         }
 
-        public async Task<PoloRelatorioDto[]> GetAllPolosByNomeAsync(string nome)
+        public async Task<PoloTurmaDto> GetTurmasByIdAsync(int turmaId)
         {
             try
             {
-                var poloRelatorio = await _poloRelatorioPersistence.GetAllPolosByNomeAsync(nome);
-                if (poloRelatorio == null)
+                var poloTurma = await _poloTurmaPersistence.GetTurmasByIdAsync(turmaId);
+                if (poloTurma == null)
                 {
                     return null;
                 }
 
-                var result = _mapper.Map<PoloRelatorioDto[]>(poloRelatorio);
+                var result = _mapper.Map<PoloTurmaDto>(poloTurma);
 
                 return result;
             }
@@ -59,17 +59,17 @@ namespace Extranet_Financeiro.Application
             }
         }
 
-        public async Task<PoloRelatorioDto> GetPolosByIdAsync(int poloRelatorioId)
+        public async Task<PoloTurmaDto[]> GetAllTurmasByDescricaoAsync(string descricao)
         {
             try
             {
-                var poloRelatorio = await _poloRelatorioPersistence.GetPolosByIdAsync(poloRelatorioId);
-                if (poloRelatorio == null)
+                var poloTurma = await _poloTurmaPersistence.GetAllTurmasByDescricaoAsync(descricao);
+                if (poloTurma == null)
                 {
                     return null;
                 }
 
-                var result = _mapper.Map<PoloRelatorioDto>(poloRelatorio);
+                var result = _mapper.Map<PoloTurmaDto[]>(poloTurma);
 
                 return result;
             }
@@ -78,5 +78,6 @@ namespace Extranet_Financeiro.Application
                 throw new Exception(ex.Message);
             }
         }
+
     }
 }

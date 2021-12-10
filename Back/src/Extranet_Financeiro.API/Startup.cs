@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using System;
 
 namespace Extranet_Financeiro.API
 {
@@ -33,10 +35,14 @@ namespace Extranet_Financeiro.API
                         x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<IRelatorioService, RelatorioService>();
             services.AddScoped<IRelatorioPersistence, RelatorioPersistence>();
             services.AddScoped<IPoloRelatorioService, PoloRelatorioService>();
             services.AddScoped<IPoloRelatorioPersistence, PoloRelatorioPersistence>();
+            services.AddScoped<IPoloTurmaService, PoloTurmaService>();
+            services.AddScoped<IPoloTurmaPersistence, PoloTurmaPersistence>();
             services.AddCors();
             services.AddSwaggerGen(c =>
             {

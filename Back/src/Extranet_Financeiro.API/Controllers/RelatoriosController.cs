@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Extranet_Financeiro.Application.Contract;
 using Microsoft.AspNetCore.Http;
@@ -22,13 +23,13 @@ namespace Extranet_Financeiro.API.Controllers
         {
             try
             {
-                 var relatorios = await _relatorioService.GetAllRelatoriosAsync();
-                 if (relatorios == null)
-                 {
-                     return NotFound("Nenhum relatório encontrado.");
-                 }
+                var relatorios = await _relatorioService.GetAllRelatoriosAsync();
+                if (relatorios == null)
+                {
+                    return NoContent();
+                }                
 
-                 return Ok(relatorios);
+                return Ok(relatorios);
             }
             catch (Exception ex)
             {                
@@ -42,13 +43,13 @@ namespace Extranet_Financeiro.API.Controllers
         {
             try
             {
-                 var relatorio = await _relatorioService.GetRelatorioByIdAsync(id);
-                 if (relatorio == null)
-                 {
-                     return NotFound("Nenhum relatório por Id encontrado.");
-                 }
+                var relatorio = await _relatorioService.GetRelatorioByIdAsync(id);
+                if (relatorio == null)
+                {
+                    return NoContent();
+                }
 
-                 return Ok(relatorio);
+                return Ok(relatorio);
             }
             catch (Exception ex)
             {                

@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Extranet_Financeiro.Domain;
+using Extranet_Financeiro.Application.Dtos;
 
 namespace Extranet_Financeiro.Application.Contract
 {
     public interface IRelatorioService
     {
-        Task<Relatorio[]> GetAllRelatoriosAsync();
-        Task<Relatorio> GetRelatorioByIdAsync(int relatorioId);
+        Task<RelatorioDto[]> GetAllRelatoriosAsync();
+        Task<RelatorioDto> GetRelatorioByIdAsync(int relatorioId);
     }
 }

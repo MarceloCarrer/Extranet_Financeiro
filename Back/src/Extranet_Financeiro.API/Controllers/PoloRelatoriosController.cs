@@ -17,18 +17,18 @@ namespace Extranet_Financeiro.API.Controllers
             _poloRelatorioService = poloRelatorioService;
         }
 
-        [HttpGet("relatorioId{relatorioId}")]
+        [HttpGet("relatorioId/{relatorioId}")]
         public async Task<IActionResult> GetAllPolosPorRelatorioAsync(int relatorioId)
         {
             try
             {
-                 var poloRelatorios = await _poloRelatorioService.GetAllPolosPorRelatorioAsync(relatorioId);
-                 if (poloRelatorios == null)
-                 {
-                     return NotFound("Nenhum polo encontrado.");
-                 }
+                var poloRelatorios = await _poloRelatorioService.GetAllPolosPorRelatorioAsync(relatorioId);
+                if (poloRelatorios == null)
+                {
+                    return NoContent();
+                }
 
-                 return Ok(poloRelatorios);
+                return Ok(poloRelatorios);
             }
             catch (Exception ex)
             {                
@@ -42,13 +42,13 @@ namespace Extranet_Financeiro.API.Controllers
         {
             try
             {
-                 var poloRelatorio = await _poloRelatorioService.GetPolosByIdAsync(id);
-                 if (poloRelatorio == null)
-                 {
-                     return NotFound("Nenhum polo por Id encontrado.");
-                 }
+                var poloRelatorio = await _poloRelatorioService.GetPolosByIdAsync(id);
+                if (poloRelatorio == null)
+                {
+                    return NoContent();
+                }
 
-                 return Ok(poloRelatorio);
+                return Ok(poloRelatorio);
             }
             catch (Exception ex)
             {                
@@ -62,13 +62,13 @@ namespace Extranet_Financeiro.API.Controllers
         {
             try
             {
-                 var poloRelatorio = await _poloRelatorioService.GetAllPolosByNomeAsync(nome);
-                 if (poloRelatorio == null)
-                 {
-                     return NotFound("Nenhum polo por Nome encontrado.");
-                 }
+                var poloRelatorio = await _poloRelatorioService.GetAllPolosByNomeAsync(nome);
+                if (poloRelatorio == null)
+                {
+                    return NoContent();
+                }
 
-                 return Ok(poloRelatorio);
+                return Ok(poloRelatorio);
             }
             catch (Exception ex)
             {                
